@@ -5,13 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>新MBTI診断</title>
 <style>
-body{font-family:sans-serif;background:#f3f4f6;margin:0;display:flex;justify-content:center} .container{width:100%;max-width:500px;min-height:100vh;background:#fff;padding:30px 15px;box-sizing:border-box;display:flex;flex-direction:column} h1{text-align:center;font-size:1.4rem;color:#111;margin-bottom:15px} .progress-container{width:100%;background:#e5e7eb;border-radius:10px;height:8px;margin-bottom:30px;overflow:hidden} .progress-bar{height:100%;background:#33a474;width:0%;transition:width .3s} #question-area,#loading-area,#result-area{display:none;flex-direction:column;align-items:center;width:100%} .question-text{font-size:1.2rem;font-weight:bold;margin-bottom:30px;text-align:center;line-height:1.4} .btn{width:100%;padding:16px;margin-bottom:12px;background:#f9fafb;border:2px solid E5E7EB_1;border-radius:12px;font-size:1rem;cursor:pointer;font-weight:bold;box-sizing:border-box} .btn:active{background:#ecfdf5;border-color:#33a474} .spinner{border:5px solid F3F3F3_1;border-top:5px solid 33A474_1;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;margin:40px 0} .result-img{width:100%;max-width:320px;border-radius:15px;margin:20px 0;box-shadow:0 4px 10px rgba(0,0,0,0.1)} .result-message{font-size:1rem;line-height:1.7;padding:15px;background:#f0fdf4;border-radius:15px;color:#064e3b;border:1px solid D1FAE5_1;width:100%;box-sizing:border-box} .audio-box{margin-top:25px;width:100%;text-align:center;padding:15px;border:2px dashed 33A474_1;border-radius:15px;background:#fff;box-sizing:border-box} @keyframes spin{to{transform:rotate(360deg)}}
+/* 全体のレイアウト設定 */
+body { font-family: sans-serif; background: F3F4F6_1; margin: 0; display: flex; justify-content: center; min-height: 100vh; }
+.container { width: 100%; max-width: 500px; background: #fff; padding: 30px 20px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+h1 { text-align: center; font-size: 1.4rem; color: #111; margin-bottom: 15px; }
+
+/* 進捗バー */
+.progress-container { width: 100%; background: E5E7EB_1; border-radius: 10px; height: 8px; margin-bottom: 30px; overflow: hidden; }
+.progress-bar { height: 100%; background: 33A474_1; width: 0%; transition: width .3s; }
+
+/* 画面の切り替え設定 */
+#question-area, #loading-area, #result-area { display: none; flex-direction: column; align-items: center; width: 100%; box-sizing: border-box; }
+.question-text { font-size: 1.2rem; font-weight: bold; margin-bottom: 30px; text-align: center; line-height: 1.4; min-height: 3em; }
+
+/* ボタンのデザイン */
+.btn { width: 100%; padding: 16px; margin-bottom: 12px; background: F9FAFB_1; border: 2px solid E5E7EB_1; border-radius: 12px; font-size: 1rem; cursor: pointer; font-weight: bold; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+.btn:active { background: ECFDF5_1; border-color: 33A474_1; transform: scale(0.98); }
+
+/* ローディング（クルクル） */
+.spinner { border: 5px solid F3F3F3_1; border-top: 5px solid 33A474_1; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 40px 0; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* 結果画面の装飾 */
+.result-img { width: 100%; max-width: 320px; border-radius: 15px; margin: 20px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.result-message { font-size: 1rem; line-height: 1.7; padding: 20px; background: F0FDF4_1; border-radius: 15px; color: 064E3B_1; border: 1px solid D1FAE5_1; width: 100%; box-sizing: border-box; text-align: left; }
+
+/* 音声プレイヤーの枠（ここを修正しました） */
+.audio-box { margin-top: 25px; width: 100%; text-align: center; padding: 20px; border: 2px dashed 33A474_1; border-radius: 15px; background: #fff; box-sizing: border-box; }
+audio { width: 100%; margin-top: 10px; }
 </style>
 </head>
 <body>
+
 <div class="container">
     <h1>新MBTI診断</h1>
-    <div id="progress-wrapper"><div class="progress-container"><div id="progress-bar" class="progress-bar"></div></div></div>
+
+    <div id="progress-wrapper" style="width:100%;">
+        <div class="progress-container"><div id="progress-bar" class="progress-bar"></div></div>
+    </div>
 
     <div id="question-area" style="display:flex">
         <div id="q-num" style="font-weight:bold;color:#666;margin-bottom:10px">Question 1</div>
@@ -20,11 +51,16 @@ body{font-family:sans-serif;background:#f3f4f6;margin:0;display:flex;justify-con
         <button class="btn" onclick="nextQuestion()">選択肢B</button>
     </div>
 
-    <div id="loading-area"><div class="spinner"></div><h2>分析中...</h2><p>回答の傾向を読み取っています</p></div>
+    <div id="loading-area">
+        <div class="spinner"></div>
+        <h2 style="font-size:1.2rem; margin:0;">分析中...</h2>
+        <p style="color:#666; font-size:0.9rem;">回答の傾向を読み取っています</p>
+    </div>
 
     <div id="result-area">
-        <p style="font-weight:bold;color:#666">診断結果</p>
+        <p style="font-weight:bold;color:#666;margin:0;">診断結果</p>
         <img src="./IMG_5614.PNG" alt="結果画像" class="result-img">
+
         <div class="result-message">
             15問の回答ありがとうございました！<br><br>
             診断の結果、今のあなたに必要なのは「お疲れ様」の一言でした。<br><br>
@@ -32,30 +68,45 @@ body{font-family:sans-serif;background:#f3f4f6;margin:0;display:flex;justify-con
         </div>
 
         <div class="audio-box">
-            <p style="font-weight:bold;color:#33a474;margin-bottom:12px;font-size:1.1rem">✨ スペシャルメッセージが届いています！</p>
-            <audio controls style="width:100%">
+            <p style="font-weight:bold;color:#33a474;margin:0;font-size:1.1rem">✨ スペシャルメッセージ</p>
+            <audio controls>
                 <source src="./%E9%9F%B3%E5%A3%B0.mp3" type="audio/mpeg">
                 お使いのブラウザは再生に対応していません。
             </audio>
-            <p style="font-size:0.8rem;color:#888;margin-top:8px">（再生ボタンを押して聴いてみてね）</p>
+            <p style="font-size:0.8rem;color:#888;margin-top:10px">（再生ボタンを押して聴いてみてね）</p>
         </div>
     </div>
 </div>
 
 <script>
 const questions=[{q:"新しい人と出会うことは？",a:["エネルギーをもらえる","少し疲れを感じる"]},{q:"物事を考えるときは？",a:["現実的な事実を重視する","可能性や概念を重視する"]},{q:"決断を下すときは？",a:["論理的で客観的な正しさを選ぶ","周囲の感情や調和を大切にする"]},{q:"生活のスタイルは？",a:["計画を立ててきっちり進めたい","柔軟にその場の状況に合わせたい"]},{q:"パーティーや集まりでは？",a:["自分から多くの人に話しかける","知っている人と静かに話す"]},{q:"想像力豊かな世界に浸ることは？",a:["あまりない、現実が大事","よくある、ワクワクする"]},{q:"他人を批判しなければならない時は？",a:["率直に事実を伝える","相手の気持ちを傷つけないか悩む"]},{q:"締め切りに対しては？",a:["余裕を持って早めに終わらせる","期限ギリギリに集中してやる"]},{q:"忙しい一日の後は？",a:["誰かと話して発散したい","一人で静かに過ごしたい"]},{q:"説明書を読むときは？",a:["まず隅々までしっかり読む","読み飛ばして直感で動いてみる"]},{q:"映画を観て感動したとき？",a:["なぜ感動したか理由を考える","ただその感情にどっぷり浸かる"]},{q:"部屋の状態は？",a:["整理整頓されている方が落ち着く","多少散らかっている方がリラックスできる"]},{q:"中心になって注目を浴びるのは？",a:["どちらかといえば好きだ","できれば避けたい"]},{q:"具体的な数字やデータは？",a:["信頼できるし、好きだ","少し退屈に感じることがある"]},{q:"最後の質問です。今の気分は？",a:["よし、結果を見よう！","どんな結果かドキドキする"]}];
-let currentQ=0;
-function showQuestion(){
-    document.getElementById("q-num").innerText='Question '+(currentQ+1);
-    document.getElementById("question-text").innerText=questions[currentQ].q;
-    const btns=document.querySelectorAll(".btn");
-    btns[0].innerText=questions[currentQ].a[0];
-    btns[1].innerText=questions[currentQ].a[1];
-    document.getElementById("progress-bar").style.width=((currentQ+1)/questions.length)*100+"%";
+
+let currentQ = 0;
+function showQuestion() {
+    document.getElementById("q-num").innerText = 'Question ' + (currentQ + 1);
+    document.getElementById("question-text").innerText = questions[currentQ].q;
+    const btns = document.querySelectorAll(".btn");
+    btns[0].innerText = questions[currentQ].a[0];
+    btns[1].innerText = questions[currentQ].a[1];
+    document.getElementById("progress-bar").style.width = ((currentQ + 1) / questions.length) * 100 + "%";
 }
-function nextQuestion(){
+
+function nextQuestion() {
     currentQ++;
-    if(currentQ<questions.length){showQuestion()}
-    else{
-        document.getElementById("question-area").style.display="none";
-        document
+    if (currentQ < questions.length) {
+        showQuestion();
+    } else {
+        document.getElementById("question-area").style.display = "none";
+        document.getElementById("progress-wrapper").style.display = "none";
+        document.getElementById("loading-area").style.display = "flex";
+        setTimeout(() => {
+            document.getElementById("loading-area").style.display = "none";
+            document.getElementById("result-area").style.display = "flex";
+            window.scrollTo(0, 0);
+        }, 3500);
+    }
+}
+showQuestion();
+</script>
+</body>
+</html>
