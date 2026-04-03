@@ -28,6 +28,7 @@
         }
         h1 { font-size: 1.5rem; text-align: center; color: #111; margin-bottom: 20px; }
 
+        /* インジケーター（プログレスバー）の装飾 */
         .progress-container {
             width: 100%;
             background-color: E5E7EB_1;
@@ -43,6 +44,7 @@
             transition: width 0.3s ease;
         }
 
+        /* 各画面の表示設定 */
         #question-area, #loading-area, #result-area {
             display: none;
             flex-direction: column;
@@ -51,6 +53,8 @@
             flex-grow: 1;
             animation: fadeIn 0.6s ease;
         }
+
+        /* 質問とボタンの装飾 */
         .question-number { font-size: 0.9rem; color: 6B7280_1; margin-bottom: 10px; font-weight: bold; }
         .question-text { font-size: 1.3rem; font-weight: bold; margin-bottom: 40px; text-align: center; line-height: 1.4; }
         .btn {
@@ -60,17 +64,20 @@
         }
         .btn:active { transform: scale(0.98); border-color: 33A474_1; background-color: ECFDF5_1; }
 
+        /* クルクル（ローディング）の装飾 */
         .spinner {
             border: 5px solid F3F3F3_1; border-top: 5px solid 33A474_1; border-radius: 50%;
             width: 60px; height: 60px; animation: spin 1s linear infinite; margin-top: 50px; margin-bottom: 25px;
         }
 
+        /* 結果画面の画像とメッセージの装飾 */
         .result-img { width: 100%; max-width: 350px; border-radius: 15px; margin: 25px 0; background-color: #eee; }
         .result-message {
             font-size: 1.1rem; line-height: 1.8; text-align: left; padding: 20px;
             background: F0FDF4_1; border-radius: 15px; color: 064E3B_1; border: 1px solid D1FAE5_1;
         }
 
+        /* アニメーション設定 */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
@@ -147,6 +154,7 @@
         btns[0].innerText = questions[currentQ].a[0];
         btns[1].innerText = questions[currentQ].a[1];
 
+        // プログレスバーの進み具合
         const progress = ((currentQ + 1) / questions.length) * 100;
         pBar.style.width = progress + "%";
     }
@@ -156,11 +164,13 @@
         if (currentQ < questions.length) {
             showQuestion();
         } else {
+            // 全問終わったらクルクル画面へ
             pBar.style.width = "100%";
             qArea.style.display = "none";
             pWrapper.style.display = "none";
             loadArea.style.display = "flex";
 
+            // 4秒後に結果画面（画像）へ
             setTimeout(() => {
                 loadArea.style.display = "none";
                 resArea.style.display = "flex";
@@ -169,6 +179,7 @@
         }
     }
 
+    // 最初の質問を表示
     showQuestion();
 </script>
 
