@@ -5,79 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>新MBTI診断</title>
     <style>
-        body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            background-color: F3F4F6_1;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            width: 100%;
-            max-width: 500px;
-            min-height: 100vh;
-            background: FFFFFF_1;
-            padding: 40px 25px;
-            box-sizing: border-box;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            display: flex;
-            flex-grow: 1;
-            flex-direction: column;
-        }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: F3F4F6_1; color: #333; margin: 0; padding: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 500px; min-height: 100vh; background: FFFFFF_1; padding: 40px 25px; box-sizing: border-box; display: flex; flex-direction: column; }
         h1 { font-size: 1.5rem; text-align: center; color: #111; margin-bottom: 20px; }
-
-        /* インジケーター（プログレスバー）の装飾 */
-        .progress-container {
-            width: 100%;
-            background-color: E5E7EB_1;
-            border-radius: 10px;
-            height: 10px;
-            margin-bottom: 40px;
-            overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%;
-            background-color: 33A474_1;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        /* 各画面の表示設定 */
-        #question-area, #loading-area, #result-area {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            flex-grow: 1;
-            animation: fadeIn 0.6s ease;
-        }
-
-        /* 質問とボタンの装飾 */
+        .progress-container { width: 100%; background-color: E5E7EB_1; border-radius: 10px; height: 10px; margin-bottom: 40px; }
+        .progress-bar { height: 100%; background-color: 33A474_1; width: 0%; transition: width 0.3s ease; }
+        #question-area, #loading-area, #result-area { display: none; flex-direction: column; align-items: center; flex-grow: 1; animation: fadeIn 0.6s ease; }
         .question-number { font-size: 0.9rem; color: 6B7280_1; margin-bottom: 10px; font-weight: bold; }
         .question-text { font-size: 1.3rem; font-weight: bold; margin-bottom: 40px; text-align: center; line-height: 1.4; }
-        .btn {
-            width: 100%; padding: 18px 20px; margin-bottom: 15px; background-color: F9FAFB_1;
-            border: 2px solid E5E7EB_1; border-radius: 12px; font-size: 1rem; color: 374151_1;
-            cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 500;
-        }
-        .btn:active { transform: scale(0.98); border-color: 33A474_1; background-color: ECFDF5_1; }
-
-        /* クルクル（ローディング）の装飾 */
-        .spinner {
-            border: 5px solid F3F3F3_1; border-top: 5px solid 33A474_1; border-radius: 50%;
-            width: 60px; height: 60px; animation: spin 1s linear infinite; margin-top: 50px; margin-bottom: 25px;
-        }
-
-        /* 結果画面の画像とメッセージの装飾 */
-        .result-img { width: 100%; max-width: 350px; border-radius: 15px; margin: 25px 0; background-color: #eee; }
-        .result-message {
-            font-size: 1.1rem; line-height: 1.8; text-align: left; padding: 20px;
-            background: F0FDF4_1; border-radius: 15px; color: 064E3B_1; border: 1px solid D1FAE5_1;
-        }
-
-        /* アニメーション設定 */
+        .btn { width: 100%; padding: 18px 20px; margin-bottom: 15px; background-color: F9FAFB_1; border: 2px solid E5E7EB_1; border-radius: 12px; font-size: 1rem; cursor: pointer; }
+        .btn:active { background-color: ECFDF5_1; border-color: 33A474_1; }
+        .spinner { border: 5px solid F3F3F3_1; border-top: 5px solid 33A474_1; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin-top: 50px; margin-bottom: 25px; }
+        .result-img { width: 100%; max-width: 350px; border-radius: 15px; margin: 25px 0; }
+        .result-message { font-size: 1.1rem; line-height: 1.8; padding: 20px; background: F0FDF4_1; border-radius: 15px; color: 064E3B_1; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
@@ -87,9 +27,7 @@
 <div class="container">
     <h1>新MBTI診断</h1>
     <div id="progress-wrapper">
-        <div class="progress-container">
-            <div id="progress-bar" class="progress-bar"></div>
-        </div>
+        <div class="progress-container"><div id="progress-bar" class="progress-bar"></div></div>
     </div>
 
     <div id="question-area" style="display: flex;">
@@ -139,24 +77,13 @@
     ];
 
     let currentQ = 0;
-    const qArea = document.getElementById("question-area");
-    const loadArea = document.getElementById("loading-area");
-    const resArea = document.getElementById("result-area");
-    const qText = document.getElementById("question-text");
-    const qNumText = document.getElementById("q-num");
-    const btns = document.querySelectorAll(".btn");
-    const pBar = document.getElementById("progress-bar");
-    const pWrapper = document.getElementById("progress-wrapper");
-
     function showQuestion() {
-        qNumText.innerText = 'Question ' + (currentQ + 1);
-        qText.innerText = questions[currentQ].q;
+        document.getElementById("q-num").innerText = 'Question ' + (currentQ + 1);
+        document.getElementById("question-text").innerText = questions[currentQ].q;
+        const btns = document.querySelectorAll(".btn");
         btns[0].innerText = questions[currentQ].a[0];
         btns[1].innerText = questions[currentQ].a[1];
-
-        // プログレスバーの進み具合
-        const progress = ((currentQ + 1) / questions.length) * 100;
-        pBar.style.width = progress + "%";
+        document.getElementById("progress-bar").style.width = ((currentQ + 1) / questions.length) * 100 + "%";
     }
 
     function nextQuestion() {
@@ -164,24 +91,17 @@
         if (currentQ < questions.length) {
             showQuestion();
         } else {
-            // 全問終わったらクルクル画面へ
-            pBar.style.width = "100%";
-            qArea.style.display = "none";
-            pWrapper.style.display = "none";
-            loadArea.style.display = "flex";
-
-            // 4秒後に結果画面（画像）へ
+            document.getElementById("question-area").style.display = "none";
+            document.getElementById("progress-wrapper").style.display = "none";
+            document.getElementById("loading-area").style.display = "flex";
             setTimeout(() => {
-                loadArea.style.display = "none";
-                resArea.style.display = "flex";
+                document.getElementById("loading-area").style.display = "none";
+                document.getElementById("result-area").style.display = "flex";
                 window.scrollTo(0, 0);
             }, 4000);
         }
     }
-
-    // 最初の質問を表示
     showQuestion();
 </script>
-
 </body>
 </html>
