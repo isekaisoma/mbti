@@ -5,20 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>新MBTI診断</title>
 <style>
-body{font-family:sans-serif;background:#f3f4f6;margin:0;display:flex;justify-content:center}
-.container{width:100%;max-width:500px;min-height:100vh;background:#fff;padding:40px 25px;box-sizing:border-box;display:flex;flex-direction:column}
-h1{text-align:center;font-size:1.5rem;color:#111}
-.progress-container{width:100%;background:#e5e7eb;border-radius:10px;height:10px;margin-bottom:40px;overflow:hidden}
-.progress-bar{height:100%;background:#33a474;width:0%;transition:width .3s}
-#question-area,#loading-area,#result-area{display:none;flex-direction:column;align-items:center}
-.question-text{font-size:1.3rem;font-weight:bold;margin-bottom:40px;text-align:center;line-height:1.4}
-.btn{width:100%;padding:18px;margin-bottom:15px;background:#f9fafb;border:2px solid E5E7EB_1;border-radius:12px;font-size:1rem;cursor:pointer;font-weight:bold}
-.btn:active{background:#ecfdf5;border-color:#33a474}
-.spinner{border:5px solid F3F3F3_1;border-top:5px solid 33A474_1;border-radius:50%;width:60px;height:60px;animation:spin 1s linear infinite;margin:50px 0}
-.result-img{width:100%;max-width:350px;border-radius:15px;margin:25px 0;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
-.result-message{font-size:1.1rem;line-height:1.8;padding:20px;background:#f0fdf4;border-radius:15px;color:#064e3b;border:1px solid D1FAE5_1}
-.audio-box{margin-top:30px;width:100%;text-align:center;padding:20px;border:2px dashed 33A474_1;border-radius:15px;background:#fff;box-sizing:border-box}
-@keyframes spin{to{transform:rotate(360deg)}}
+body{font-family:sans-serif;background:#f3f4f6;margin:0;display:flex;justify-content:center} .container{width:100%;max-width:500px;min-height:100vh;background:#fff;padding:30px 15px;box-sizing:border-box;display:flex;flex-direction:column} h1{text-align:center;font-size:1.4rem;color:#111;margin-bottom:15px} .progress-container{width:100%;background:#e5e7eb;border-radius:10px;height:8px;margin-bottom:30px;overflow:hidden} .progress-bar{height:100%;background:#33a474;width:0%;transition:width .3s} #question-area,#loading-area,#result-area{display:none;flex-direction:column;align-items:center;width:100%} .question-text{font-size:1.2rem;font-weight:bold;margin-bottom:30px;text-align:center;line-height:1.4} .btn{width:100%;padding:16px;margin-bottom:12px;background:#f9fafb;border:2px solid E5E7EB_1;border-radius:12px;font-size:1rem;cursor:pointer;font-weight:bold;box-sizing:border-box} .btn:active{background:#ecfdf5;border-color:#33a474} .spinner{border:5px solid F3F3F3_1;border-top:5px solid 33A474_1;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;margin:40px 0} .result-img{width:100%;max-width:320px;border-radius:15px;margin:20px 0;box-shadow:0 4px 10px rgba(0,0,0,0.1)} .result-message{font-size:1rem;line-height:1.7;padding:15px;background:#f0fdf4;border-radius:15px;color:#064e3b;border:1px solid D1FAE5_1;width:100%;box-sizing:border-box} .audio-box{margin-top:25px;width:100%;text-align:center;padding:15px;border:2px dashed 33A474_1;border-radius:15px;background:#fff;box-sizing:border-box} @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
